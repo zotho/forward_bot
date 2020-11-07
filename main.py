@@ -29,6 +29,12 @@ with TelegramClient("forward_bot", api_id, api_hash) as client:
         if event.is_channel:
             await event.message.forward_to(target_username)
 
+    @client.on(events.Album)
+    async def channel_handler(event):
+        logger.info(event)
+        if event.is_channel:
+            await event.forward_to(target_username)
+
     @client.on(events.NewMessage(chats=[target_username], incoming=True))
     async def add_subscription_handler(event):
         logger.info(event)
